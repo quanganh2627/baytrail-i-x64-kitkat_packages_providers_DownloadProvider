@@ -732,7 +732,9 @@ public class DownloadList extends Activity {
                         Downloads.Impl.ALL_DOWNLOADS_CONTENT_URI, item.getKey());
                 final String mimeType = item.getValue().getMimeType();
                 attachments.add(uri);
-                mimeTypes.add(mimeType);
+                if (mimeType != null) {
+                    mimeTypes.add(mimeType);
+                }
             }
             intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments);
             intent.setType(findCommonMimeType(mimeTypes));
@@ -763,7 +765,12 @@ public class DownloadList extends Activity {
         // are all prefixes of the given mimetypes the same?
         ArrayList<String> mimeTypePrefixes = new ArrayList<String>();
         for (String s : mimeTypes) {
-            mimeTypePrefixes.add(s.substring(0, s.indexOf('/')));
+             if (s != null) {
+                 mimeTypePrefixes.add(s.substring(0, s.indexOf('/')));
+             }
+        }
+        if (mimeTypePrefixes.size() == 0) {
+            return null;
         }
         str = findCommonString(mimeTypePrefixes);
         if (str != null) {
