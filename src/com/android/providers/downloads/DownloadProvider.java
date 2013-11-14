@@ -515,7 +515,7 @@ public final class DownloadProvider extends ContentProvider {
      */
     @Override
     public Uri insert(final Uri uri, final ContentValues values) {
-        checkInsertPermissions(values);
+        // checkInsertPermissions(values);
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 
         // note we disallow inserting into ALL_DOWNLOADS
