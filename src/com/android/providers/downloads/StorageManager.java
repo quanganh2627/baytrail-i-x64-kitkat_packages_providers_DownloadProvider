@@ -221,11 +221,8 @@ class StorageManager {
             }
             if (bytesAvailable < targetBytes) {
                 // Insufficient space; make space.
-                removeSpuriousFiles();
-                bytesAvailable = getAvailableBytesInDownloadsDataDir(mDownloadDataDir);
-            }
-            if (bytesAvailable < targetBytes) {
                 discardPurgeableFiles(destination, sDownloadDataDirLowSpaceThreshold);
+                removeSpuriousFiles();
                 bytesAvailable = getAvailableBytesInDownloadsDataDir(mDownloadDataDir);
             }
         }

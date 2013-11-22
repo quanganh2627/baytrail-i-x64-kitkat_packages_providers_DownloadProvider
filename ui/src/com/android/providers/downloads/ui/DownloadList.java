@@ -765,12 +765,7 @@ public class DownloadList extends Activity {
         // are all prefixes of the given mimetypes the same?
         ArrayList<String> mimeTypePrefixes = new ArrayList<String>();
         for (String s : mimeTypes) {
-             if (s != null) {
-                 mimeTypePrefixes.add(s.substring(0, s.indexOf('/')));
-             }
-        }
-        if (mimeTypePrefixes.size() == 0) {
-            return null;
+            mimeTypePrefixes.add(s.substring(0, s.indexOf('/')));
         }
         str = findCommonString(mimeTypePrefixes);
         if (str != null) {
