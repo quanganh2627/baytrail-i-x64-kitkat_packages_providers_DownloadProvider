@@ -117,6 +117,8 @@ public class DownloadService extends Service {
 
     private volatile int mLastStartId;
 
+    private int mTempStartId;
+
     /**
      * Receives notifications when the data in the content provider changes
      */
@@ -199,7 +201,9 @@ public class DownloadService extends Service {
      * Enqueue an {@link #updateLocked()} pass to occur in future.
      */
     private void enqueueUpdate() {
-        mUpdateHandler.removeMessages(MSG_UPDATE);
+        if (mTempStartId == mLastStartId){
+            mUpdateHandler.removeMessages(MSG_UPDATE);
+        }
         mUpdateHandler.obtainMessage(MSG_UPDATE, mLastStartId, -1).sendToTarget();
     }
 
@@ -223,6 +227,7 @@ public class DownloadService extends Service {
             Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
 
             final int startId = msg.arg1;
+            mTempStartId = msg.arg1;
             if (DEBUG_LIFECYCLE) Log.v(TAG, "Updating for startId " + startId);
 
             // Since database is current source of truth, our "active" status
